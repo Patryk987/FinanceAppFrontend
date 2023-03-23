@@ -25,7 +25,7 @@ export function AppNavigation() {
         <NavigationContainer>
             <Tab.Navigator {...{ screenOptions }}>
                 <Tab.Screen
-                    name="Home"
+                    name="HomeScreen"
                     options={TabItemOption("Home", "home")}>
                     {() => (
 
@@ -39,7 +39,7 @@ export function AppNavigation() {
                     )}
                 </Tab.Screen>
                 <Tab.Screen
-                    name="operations"
+                    name="OperationsScreen"
                     options={TabItemOption("Operacje", "money")}>
                     {() => (
 
@@ -53,7 +53,7 @@ export function AppNavigation() {
                     )}
                 </Tab.Screen>
                 <Tab.Screen
-                    name="stats"
+                    name="StatsScreen"
                     options={TabItemOption("Statystyki", "stats")}>
                     {() => (
 
@@ -67,7 +67,7 @@ export function AppNavigation() {
                     )}
                 </Tab.Screen>
                 <Tab.Screen
-                    name="settings"
+                    name="SettingsScreen"
                     options={TabItemOption("Ustawienia", "setting")}>
                     {() => (
 

@@ -12,12 +12,12 @@ export default function App() {
   return (
     <PageContext.Provider value={[auth, set_auth]}>
       <StatusBar
-        // animated={false}
-        // backgroundColor="red"
+        animated={true}
+        backgroundColor="#FFFFFF"
         // barStyle={statusBarStyle}
         // showHideTransition={statusBarTransition}
-        // hidden={true}
-        transprent={true}
+        hidden={false}
+        transprent={false}
       />
       <View style={styles.container}>
         <View style={{ height: '100%', width: '100%' }}>
