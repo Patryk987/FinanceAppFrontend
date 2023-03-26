@@ -3,6 +3,9 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity, Button, Animated, Easi
 
 import { useNavigation } from '@react-navigation/native';
 
+// Icon 
+import { BackIcon } from './assets/icon.js';
+
 
 const STATUS_BAR_HEIGHT = StatusBar.currentHeight || 24;
 
@@ -19,7 +22,7 @@ export function CustomHeader(props) {
                 onPress={() => navigation.goBack()}
                 style={styles.arrowLeft}
             >
-
+                <BackIcon />
             </TouchableOpacity>
 
         </View>
@@ -33,7 +36,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingTop: STATUS_BAR_HEIGHT,
         height: 50 + STATUS_BAR_HEIGHT,
-        width: '100%'
+        width: '100%',
+        backgroundColor: 'white'
     },
     arrowLeft: {
         display: 'flex',

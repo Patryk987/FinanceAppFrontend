@@ -60,3 +60,18 @@ export const SettingIcon = (props) => (
         />
     </Svg>
 )
+
+export const BackIcon = (props) => (
+    <Svg
+        width={59}
+        height={59}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        <Path
+            d="M37.883 40.76 26.623 29.5l11.26-11.284-3.466-3.466-14.75 14.75 14.75 14.75 3.466-3.49Z"
+            fill="#000"
+        />
+    </Svg>
+)

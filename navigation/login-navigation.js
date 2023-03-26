@@ -31,7 +31,7 @@ export function LoginNavigation() {
                     }}
                 />
                 <Stack.Screen
-                    name="ForgetPassword"
+                    name="forgetPassword"
                     component={ForgetPassword}
                     options={{
                         headerShown: true,

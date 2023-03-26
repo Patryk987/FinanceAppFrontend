@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image } fr
 
 import { main, header, content, footer } from './assets/style.js';
 
+// Navigation 
+
 // Style
 import { PageContext } from './../../page-context.js';
 
@@ -13,7 +15,8 @@ export function Login({ navigation }) {
 
     const [auth, set_auth] = useContext(PageContext);
 
-    const [login, setLogin] = useState();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const send = () => {
 
@@ -32,40 +35,54 @@ export function Login({ navigation }) {
 
             </View>
 
-            <View style={content.content}>
+            <ScrollView style={content.content}>
 
                 <CustomInput
-                    label={'Twój nick lub email'}
-                    value={(text) => setLogin(text)}
+                    label={'Twój email'}
+                    value={(text) => setEmail(text)}
 
                 />
 
                 <CustomInput
                     label={'Twoje hasło'}
-                    value={(text) => setLogin(text)}
+                    value={(text) => setPassword(text)}
                     secureTextEntry={true}
                 />
 
-                <View style={{ marginBottom: 30 }}>
-                    <Text style={{ fontWeight: 'bold' }}>Zapomniałeś hasła?</Text>
-                </View>
+                <TouchableOpacity onPress={() => navigation.navigate('forgetPassword')}>
 
-                <CustomInput
-                    label={'Zaloguj się'}
-                    type="button"
-                />
+                    <View style={{ marginBottom: 30 }}>
+                        <Text style={{ fontWeight: 'bold' }}>Zapomniałeś hasła?</Text>
+                    </View>
 
-            </View>
+                </TouchableOpacity>
+
+
+                <TouchableOpacity onPress={() => send()}>
+
+                    <CustomInput
+                        label={'Zaloguj się'}
+                        type="button"
+                    />
+
+                </TouchableOpacity>
+
+            </ScrollView>
 
             <View style={footer.content}>
 
-                <Text>
-                    <Text style={{ fontWeight: 'bold' }}>Nie masz jeszcze konta?</Text>
-                    Zarejestruj się
-                </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('registration')}>
+
+                    <Text>
+                        <Text style={{ fontWeight: 'bold' }}>Nie masz jeszcze konta?</Text>
+                        Zarejestruj się
+                    </Text>
+
+                </TouchableOpacity>
+
 
             </View>
 
-        </View>
+        </View >
     )
 }
