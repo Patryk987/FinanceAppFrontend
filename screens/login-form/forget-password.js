@@ -6,14 +6,14 @@ import { main, header, content, footer } from './assets/style.js';
 // Navigation 
 
 // Style
-import { PageContext } from './../../page-context.js';
+import { UserContext } from '../../context.js';
 
 // Modules
 import { CustomInput } from '../../modules/custom-inputs/index.js'
 
 export function ForgetPassword({ navigation }) {
 
-    const [auth, set_auth] = useContext(PageContext);
+    const [auth, set_auth] = useContext(UserContext);
 
     const [login, setLogin] = useState();
 

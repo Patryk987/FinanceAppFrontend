@@ -6,18 +6,16 @@ import { LoginNavigation } from './login-navigation.js';
 
 const GlobalContext = createContext('Initial Value');
 
-import { PageContext } from './../page-context.js';
+import { UserContext } from '../context.js';
 
 export function Navigation() {
 
-    const [auth] = useContext(PageContext);
+    const auth = useContext(UserContext);
 
-    switch (auth) {
-        case 1:
-            return (<AppNavigation />);
-            break;
-        default:
-            return (<LoginNavigation />);
-            break;
+    if (auth.loggedIn) {
+        return (<AppNavigation />);
+    } else {
+        return (<LoginNavigation />);
     }
+
 }

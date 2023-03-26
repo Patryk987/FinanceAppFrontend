@@ -4,13 +4,12 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { Navigation } from './navigation/index.js';
 
-import { PageContext } from './page-context.js';
+import { UserContextProvider } from './context.js';
 
 export default function App() {
-  const [auth, set_auth] = useState(3);
 
   return (
-    <PageContext.Provider value={[auth, set_auth]}>
+    <UserContextProvider>
       <StatusBar
         animated={true}
         backgroundColor="#FFFFFF"
@@ -24,8 +23,9 @@ export default function App() {
           <Navigation />
         </View>
       </View>
-    </PageContext.Provider>
+    </UserContextProvider>
   );
+
 }
 
 const styles = StyleSheet.create({

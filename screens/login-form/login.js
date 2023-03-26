@@ -6,21 +6,21 @@ import { main, header, content, footer } from './assets/style.js';
 // Navigation 
 
 // Style
-import { PageContext } from './../../page-context.js';
+import { UserContextProvider, UserContext } from '../../context.js';
 
 // Modules
 import { CustomInput } from '../../modules/custom-inputs/index.js'
 
 export function Login({ navigation }) {
 
-    const [auth, set_auth] = useContext(PageContext);
-
+    const auth = useContext(UserContext);
+    // 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const send = () => {
 
-        set_auth(1);
+        auth.authenticate("OK");
 
     }
 
