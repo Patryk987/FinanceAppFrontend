@@ -1,6 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import { StyleTemplate } from '../../../assets/style.js';
 

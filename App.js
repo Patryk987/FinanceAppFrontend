@@ -11,12 +11,8 @@ export default function App() {
   return (
     <UserContextProvider>
       <StatusBar
-        animated={true}
-        backgroundColor="#FFFFFF"
-        // barStyle={statusBarStyle}
-        // showHideTransition={statusBarTransition}
         hidden={false}
-        transprent={false}
+        transprent={true}
       />
       <View style={styles.container}>
         <View style={{ height: '100%', width: '100%' }}>
@@ -31,7 +27,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F6F6F6',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
