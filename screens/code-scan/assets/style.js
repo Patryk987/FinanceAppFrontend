@@ -16,3 +16,42 @@ export const main = StyleSheet.create({
         marginTop: STATUSBAR_HEIGHT,
     }
 });
+
+export const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        // justifyContent: 'center',
+        // backgroundColor: 'white'
+    },
+    camera: {
+        flex: 1,
+
+    },
+    maskContainer: {
+        width: '100%',
+        height: '100%'
+    },
+    mask: {
+        flex: 1,
+        height: (screenHeight - 200) / 2,
+        width: '100%',
+        backgroundColor: 'rgba(8, 32, 50, 0.9)',
+        justifyContent: 'space-between',
+        flexDirection: 'row'
+    },
+    maskInner: {
+        height: '100%',
+        width: (screenWidth - 200) / 2,
+        backgroundColor: 'rgba(8, 32, 50, 0.9)'
+    },
+    button: {
+        flex: 1,
+        alignSelf: 'flex-end',
+        alignItems: 'center',
+    },
+    text: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+});

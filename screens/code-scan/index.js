@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image, Button, Linking } from 'react-native';
 
 import { Camera, CameraType } from 'expo-camera';
 // Style
-import { main } from './assets/style.js';
+import { main, styles } from './assets/style.js';
 
 // Icon 
 // import { ProductBarIcon, RightIcon } from './assets/icon.js';
@@ -19,6 +19,12 @@ export function ScanCode({ navigation }) {
     const [type, setType] = useState(CameraType.back);
     const [permission, requestPermission] = Camera.useCameraPermissions();
 
+    const addPermission = () => {
+
+        requestPermission();
+
+    }
+
     const save = (x) => {
         let code = x.data;
         setScanned(true);
@@ -26,7 +32,6 @@ export function ScanCode({ navigation }) {
         fetch("https://world.openfoodfacts.org/api/v0/product/" + code + ".json")
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 setProductData({
                     'image': data.product.image_front_url,
                     'name': data.product.product_name,
@@ -45,8 +50,13 @@ export function ScanCode({ navigation }) {
         // Camera permissions are not granted yet
         return (
             <View style={styles.container}>
-                <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-                <Button onPress={requestPermission} title="grant permission" />
+
+                <TouchableOpacity
+                    onPress={() => addPermission()}
+                    style={{ width: '80%', alignSelf: 'center', alignItems: 'center', backgroundColor: '#082032', padding: 20, borderRadius: 10 }}
+                >
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}>Przyznaj dostęp do kamery</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -83,36 +93,16 @@ export function ScanCode({ navigation }) {
                 type={type}
                 onBarCodeScanned={(x) => save(x)}
             >
-                <View style={styles.buttonContainer}>
-
+                <View style={styles.maskContainer}>
+                    <View style={styles.mask}></View>
+                    <View style={[styles.mask, { backgroundColor: 'rgba(8, 32, 50, 0)', height: 200 }]}>
+                        <View style={styles.maskInner}></View>
+                        <View style={styles.maskInner}></View>
+                    </View>
+                    <View style={styles.mask}></View>
                 </View>
             </Camera>
         </View>
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    camera: {
-        flex: 1,
-    },
-    buttonContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: 'transparent',
-        margin: 64,
-    },
-    button: {
-        flex: 1,
-        alignSelf: 'flex-end',
-        alignItems: 'center',
-    },
-    text: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: 'white',
-    },
-});
