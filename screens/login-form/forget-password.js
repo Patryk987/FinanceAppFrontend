@@ -13,16 +13,6 @@ import { CustomInput } from '../../modules/custom-inputs/index.js'
 
 export function ForgetPassword({ navigation }) {
 
-    const [auth, set_auth] = useContext(UserContext);
-
-    const [login, setLogin] = useState();
-
-    const send = () => {
-
-        set_auth(1);
-
-    }
-
     return (
         <View style={main.content}>
 
@@ -38,8 +28,6 @@ export function ForgetPassword({ navigation }) {
 
                 <CustomInput
                     label={'Twój email'}
-                    value={(text) => setLogin(text)}
-
                 />
 
                 <TouchableOpacity onPress={() => send()}>
