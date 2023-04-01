@@ -27,7 +27,7 @@ export function Home({ navigation }) {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={scan.content}>
+                <TouchableOpacity style={scan.content} onPress={() => navigation.navigate('ScanCode')}>
 
                     <View style={scan.box}>
 

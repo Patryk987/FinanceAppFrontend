@@ -12,6 +12,7 @@ import { Home } from './../screens/home/index.js';
 import { Operations } from './../screens/operations/index.js';
 import { Stats } from './../screens/stats/index.js';
 import { Settings } from './../screens/settings/index.js';
+import { ScanCode } from './../screens/code-scan/index.js';
 
 const Tab = createBottomTabNavigator();
 const SettingsStack = createNativeStackNavigator();
@@ -30,10 +31,14 @@ export function AppNavigation() {
                     {() => (
 
                         <SettingsStack.Navigator>
-                            <SettingsStack.Screen
+                            <HomeStack.Screen
                                 name="Home"
                                 component={Home}
                                 options={{ headerShown: false }} />
+                            <SettingsStack.Screen
+                                name="ScanCode"
+                                component={ScanCode}
+                                options={{ headerShown: true }} />
                         </SettingsStack.Navigator>
 
                     )}
@@ -44,7 +49,7 @@ export function AppNavigation() {
                     {() => (
 
                         <SettingsStack.Navigator>
-                            <SettingsStack.Screen
+                            <HomeStack.Screen
                                 name="operations"
                                 component={Operations}
                                 options={{ headerShown: false }} />
@@ -58,7 +63,7 @@ export function AppNavigation() {
                     {() => (
 
                         <SettingsStack.Navigator>
-                            <SettingsStack.Screen
+                            <HomeStack.Screen
                                 name="stats"
                                 component={Stats}
                                 options={{ headerShown: false }} />
@@ -72,7 +77,7 @@ export function AppNavigation() {
                     {() => (
 
                         <SettingsStack.Navigator>
-                            <SettingsStack.Screen
+                            <HomeStack.Screen
                                 name="settings"
                                 component={Settings}
                                 options={{ headerShown: false }} />
