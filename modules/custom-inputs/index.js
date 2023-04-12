@@ -60,7 +60,7 @@ export function CustomInput(props) {
     const onChange = (text) => {
 
         set_value(text);
-        if (props.value) props.value(text);
+        props.onChangeText(text);
 
     }
 

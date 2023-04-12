@@ -1,20 +1,12 @@
 import config from "./config.json";
 // import * as Network from 'expo-network';
 
-export class Api {
+class Api {
 
-    endpoint
-
-    constructor(endpoint) {
+    constructor(endpoint, user_key = "") {
         this.endpoint = endpoint;
-    }
-
-
-    get_user_key() {
-
-        var user_key = "";
-
-        return user_key;
+        this.user_key = user_key;
+        this.api_key = config.api_key;
     }
 
     convert_data_to_string(data) {
@@ -44,15 +36,14 @@ export class Api {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': config.api_key,
-                'user_key': this.get_user_key()
+                'api_key': this.api_key,
+                'user_key': this.user_key
             }
         };
 
         return fetch(host, requestOptions)
             .then((response) => response.json())
             .then((responseData) => {
-                console.log(responseData);
                 return responseData;
             })
             .catch(error => console.warn(error));
@@ -67,8 +58,8 @@ export class Api {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': config.api_key,
-                'user_key': this.get_user_key()
+                'api_key': this.api_key,
+                'user_key': this.user_key
             },
             body: JSON.stringify(data)
         };
@@ -76,11 +67,11 @@ export class Api {
         return fetch(host, requestOptions)
             .then((response) => response.json())
             .then((responseData) => {
-                console.log(responseData);
                 return responseData;
             })
-            .catch(error => console.warn(error));
-
+            .catch((error, response) => {
+                console.warn(error)
+            });
 
     }
 
@@ -92,8 +83,8 @@ export class Api {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': config.api_key,
-                'user_key': this.get_user_key()
+                'api_key': this.api_key,
+                'user_key': this.user_key
             },
             body: JSON.stringify(data)
         };
@@ -101,25 +92,23 @@ export class Api {
         return fetch(host, requestOptions)
             .then((response) => response.json())
             .then((responseData) => {
-                console.log(responseData);
                 return responseData;
             })
             .catch(error => console.warn(error));
 
-
     }
 
-    delete(endpoint, data) {
+    delete(data) {
 
         var prepare_query = this.convert_data_to_string(data);
 
-        var host = config.host + "/" + endpoint + prepare_query;
+        var host = config.host + "/" + this.endpoint + prepare_query;
 
         const requestOptions = {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'api_key': config.api_key,
+                'api_key': this.api_key,
                 'user_key': this.user_key
             }
         };
@@ -127,7 +116,6 @@ export class Api {
         return fetch(host, requestOptions)
             .then((response) => response.json())
             .then((responseData) => {
-                console.log(responseData);
                 return responseData;
             })
             .catch(error => console.warn(error));
@@ -135,3 +123,5 @@ export class Api {
     }
 
 }
+
+export default Api;
