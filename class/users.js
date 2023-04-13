@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native';
 
 import Api from './api.js';
-import db from './SQLite.js';
+import { DataBase } from './SQLite.js';
 import JWT from './decodeJWT.js';
 
 
 
 class User {
     static login = false;
+    db = new DataBase("FinanceApp99");
 
     construct() {
+
 
     }
 
     create_db() {
 
-        const usersDB = "create table if not exists user (id INTEGER not null, token TEXT, type INTEGER);";
-        db.execute(usersDB);
+        const usersDB = "create table if not exists users (token TEXT);";
+        this.db.execute(usersDB);
 
     }
 
@@ -36,8 +38,9 @@ class User {
 
             if (response.status == 200) {
                 var data = JWT.decode(response.TokenJWT);
-
-                // this.save(data.payload.token);
+                // console.log(data);
+                await this.save(response.TokenJWT);
+                console.log(await this.get());
                 return { "status": true, "token": response.TokenJWT };
             }
 
@@ -70,34 +73,51 @@ class User {
 
     }
 
-    save(token) {
+    async save(token) {
         this.create_db();
 
-        const insert = "insert into user (id, token) values (?, ?, ?)";
-        const data = [id, token, type];
+        const insert = "insert into users (token) values (?)";
+        const data = [token];
 
-        db.execute(insert, data);
+        let insertResults = await this.db.execute(insert, data);
+        console.log(insertResults);
+        return { "state": true, "insertId": insertResults.insertId };
     }
 
-    get() {
+    async get() {
         this.create_db();
 
-        const select = "SELECT * FROM user";
+        const select = "SELECT * FROM users";
 
-        db.execute(select).then((response) => {
+        return await this.db.execute(select).then((response) => {
+            var tab = [];
             for (var i = 0; i < response.rows.length; i++) {
                 console.log(response.rows.item(i));
+                tab.push(response.rows.item(i));
             }
-        });
 
+            return tab;
+        });
     }
 
     logout() {
 
         const clearDB = "DELETE FROM user";
-        db.execute(clearDB);
+        this.db.execute(clearDB);
 
         User.login = false;
+
+    }
+
+
+    async user_is_login() {
+
+        var users = await this.get();
+        if (users.length > 0) {
+            return { "status": true, "token": users[0].token };
+        } else {
+            return { "status": false, "token": "" };
+        }
 
     }
 

@@ -1,45 +1,59 @@
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 
-class Database {
+// import * as Device from 'expo-device';
 
-    constructor(dataBaseName = "mydb") {
-        this.db = null;
-        this.dataBaseName = dataBaseName;
+
+export class DataBase {
+
+    constructor(name = "database") {
+        this.db = SQLite.openDatabase(name + ".db");
     }
 
-    async open() {
+    execute(query, data = []) {
+        // if (Device.brand != null) {
+
         try {
-            this.db = await SQLite.openDatabase({
-                name: this.dataBaseName + '.db',
-                location: 'default',
+
+            return new Promise((resolve, reject) => {
+
+                if (!this.db) {
+                    reject(new Error('Database connection not found.'));
+                    return;
+                }
+
+                this.db.transaction(tx => {
+                    tx.executeSql(query, data, (tx, results) => {
+                        resolve(results);
+                    }, (tx, error) => {
+                        reject(error);
+                    });
+                });
+
             });
+
+
         } catch (error) {
-            console.error(error);
+            return error;
         }
+
+
+        // } else {
+        //     console.warn("Incorrect device");
+        //     return { "status": false }
+        // }
+
     }
 
-    async close() {
-        try {
-            if (this.db) {
-                await this.db.close();
-                this.db = null;
+    close() {
+        this.db.close((err) => {
+            if (err) {
+                console.error(err.message);
+            } else {
+                console.log('Closed the SQLite database connection.');
             }
-        } catch (error) {
-            console.error(error);
-        }
+        });
     }
 
-    async execute(sql, params = []) {
-        try {
-            const result = await this.db.executeSql(sql, params);
-            let tab = [];
-            result.forEach(element => {
-                tab.push(element.rowsAffected);
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    }
 }
-
-export default new Database();
