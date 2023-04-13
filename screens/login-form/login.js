@@ -1,26 +1,40 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image } from 'react-native';
 
-import { main, header, content, footer } from './assets/style.js';
+// Context
+import { UserContextProvider, UserContext } from '../../context.js';
 
-// Navigation 
+// Class
+import Api from '../../class/api.js';
+import User from '../../class/users.js'
 
 // Style
-import { UserContextProvider, UserContext } from '../../context.js';
+import { main, header, content, footer } from './assets/style.js';
 
 // Modules
 import { CustomInput } from '../../modules/custom-inputs/index.js'
 
 export function Login({ navigation }) {
 
+    const endpointUser = 'api/account/login';
     const auth = useContext(UserContext);
-    // 
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const send = () => {
+    const [loader, setLoader] = useState(false);
 
-        auth.authenticate("OK");
+    const send = async () => {
+
+        setLoader(true);
+
+        var loginResult = await User.login(email, password, endpointUser);
+
+        if (loginResult.status) {
+            auth.authenticate(loginResult.token);
+        }
+
+        setLoader(false);
 
     }
 
@@ -38,15 +52,18 @@ export function Login({ navigation }) {
             <ScrollView style={content.content}>
 
                 <CustomInput
-                    label={'Twój email'}
-                    value={(text) => setEmail(text)}
+                    label="Twój email"
+                    type="input"
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
 
                 />
 
                 <CustomInput
                     label={'Twoje hasło'}
-                    value={(text) => setPassword(text)}
                     secureTextEntry={true}
+                    onChangeText={(text) => setPassword(text)}
+                    value={password}
                 />
 
                 <TouchableOpacity onPress={() => navigation.navigate('forgetPassword')}>

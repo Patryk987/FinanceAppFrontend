@@ -3,15 +3,23 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image } fr
 
 import { main, header, content, footer } from './assets/style.js';
 
-// Navigation 
+// Class
+import User from '../../class/users.js'
 
 // Style
 import { UserContext } from '../../context.js';
 
 // Modules
 import { CustomInput } from '../../modules/custom-inputs/index.js'
+import { Popup } from '../../modules/popup/index.js'
 
 export function Registration({ navigation }) {
+
+    const endpointRegistrationUser = 'api/account/register';
+    const auth = useContext(UserContext);
+
+    const [loader, setLoader] = useState(false);
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
@@ -19,52 +27,71 @@ export function Registration({ navigation }) {
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
 
+    const registration = async () => {
 
-    const registration = () => {
+        setLoader(true);
 
+        var registrationResult = await User.registration(email, name, surname, password, repeatPassword, endpointRegistrationUser);
 
+        if (registrationResult.status) {
+            setIsPopupVisible(true);
+        } else {
+            console.log(registrationResult.errors);
+        }
+
+        setLoader(false);
     }
+
+    const closePopup = () => {
+        navigation.navigate("login");
+        setIsPopupVisible(!isPopupVisible);
+    };
 
     return (
         <View style={main.content}>
 
-            <View style={[header.content, { height: '10%' }]}>
-
-                <Text style={header.title}>
-                    Rejestracja
-                </Text>
-
-            </View>
-
             <ScrollView style={content.content}>
+
+                <View style={[header.content, { height: '10%' }]}>
+
+                    <Text style={header.title}>
+                        Rejestracja
+                    </Text>
+
+                </View>
 
                 <CustomInput
                     label={'Twój email'}
-                    value={(text) => setEmail(text)}
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
 
                 />
 
                 <CustomInput
                     label={'Twoje imię'}
-                    value={(text) => setName(text)}
+                    onChangeText={(text) => setName(text)}
+                    value={name}
 
                 />
 
                 <CustomInput
                     label={'Twoje nazwisko'}
-                    value={(text) => setSurname(text)}
+                    onChangeText={(text) => setSurname(text)}
+                    value={surname}
 
                 />
 
                 <CustomInput
                     label={'Twoje hasło'}
-                    value={(text) => setPassword(text)}
+                    onChangeText={(text) => setPassword(text)}
+                    value={password}
                     secureTextEntry={true}
                 />
 
                 <CustomInput
                     label={'Powtórz hasło'}
-                    value={(text) => setRepeatPassword(text)}
+                    onChangeText={(text) => setRepeatPassword(text)}
+                    value={repeatPassword}
                     secureTextEntry={true}
                 />
 
@@ -79,6 +106,14 @@ export function Registration({ navigation }) {
 
 
             </ScrollView>
+
+            <Popup
+                title="Rejestracja"
+                message="Poprawnie zarejestrowano użytkownika, możesz się teraz zalogować"
+                buttonText="Zaloguj"
+                visible={isPopupVisible}
+                onClose={closePopup}
+            />
 
         </View >
     )
