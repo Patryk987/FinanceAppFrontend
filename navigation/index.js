@@ -11,6 +11,9 @@ import { UserContext } from '../context.js';
 // Class
 import User from './../class/users.js';
 
+// Modules
+import PinKeyboard from './../modules/pin-keyboard/index.js';
+
 export function Navigation() {
 
     const [load, setLoad] = useState(false);
@@ -34,10 +37,20 @@ export function Navigation() {
         checkLoginUsers();
     }, []);
 
-    if (auth.loggedIn) {
-        return (<AppNavigation />);
+    if (load) {
+
+        if (auth.loggedIn) {
+            return <AppNavigation />;
+        } else {
+            return <LoginNavigation />;
+        }
+
     } else {
-        return (<LoginNavigation />);
+        return (
+            <View>
+                <PinKeyboard />
+            </View>
+        );
     }
 
 }
