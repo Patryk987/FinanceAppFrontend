@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-import { styles } from './assets/style.js';
-
 import * as LocalAuthentication from 'expo-local-authentication';
 
-const numberLength = 4;
+// Style
+import { styles } from './assets/style.js';
+
+// Icon 
+import { Backspace, Fingerprint } from './assets/icon.js';
+
+// Class
+import User from './../../class/users.js';
+const userPin = User.get_pin();
+
+
+const numberLength = userPin.length;
 
 function PinKeyboard({ onPress }) {
     const [pin, setPin] = useState('');
@@ -57,7 +66,7 @@ function PinKeyboard({ onPress }) {
     };
 
     const checkPin = (pin) => {
-        if (pin == "1111") {
+        if (pin == userPin.pin) {
             auth(true);
         } else {
             auth(false);
@@ -87,12 +96,12 @@ function PinKeyboard({ onPress }) {
                 <PinButton digit={9} onPress={handlePress} />
             </View>
             <View style={styles.row}>
-                <TouchableOpacity style={styles.button} onPress={() => handleAuthenticate()}>
-                    <Text style={styles.buttonText}></Text>
+                <TouchableOpacity style={[styles.button, { backgroundColor: "#FF4C29" }]} onPress={() => handleAuthenticate()}>
+                    <Fingerprint />
                 </TouchableOpacity>
                 <PinButton digit={0} onPress={handlePress} />
                 <TouchableOpacity style={styles.backButton} onPress={() => setPin(pin.slice(0, -1))}>
-                    <Text style={styles.backButtonText}></Text>
+                    <Backspace />
                 </TouchableOpacity>
             </View>
 

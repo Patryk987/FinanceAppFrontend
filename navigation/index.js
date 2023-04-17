@@ -16,7 +16,7 @@ import PinKeyboard from './../modules/pin-keyboard/index.js';
 
 export function Navigation() {
 
-    const [load, setLoad] = useState(false);
+    const [load, setLoad] = useState(true);
 
     const auth = useContext(UserContext);
 

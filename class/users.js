@@ -109,6 +109,12 @@ class User {
 
     }
 
+    get_pin() {
+
+        return { "pin": 1234, "length": 4 }
+
+    }
+
 
     async user_is_login() {
 
