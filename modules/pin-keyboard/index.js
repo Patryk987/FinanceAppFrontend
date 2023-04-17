@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 import * as LocalAuthentication from 'expo-local-authentication';
@@ -9,15 +9,24 @@ import { styles } from './assets/style.js';
 // Icon 
 import { Backspace, Fingerprint } from './assets/icon.js';
 
+// Context
+import { UserContext } from '../../context.js';
+
 // Class
 import User from './../../class/users.js';
 const userPin = User.get_pin();
+
+// Modules
+import Loader from './../../modules/loader/index.js';
 
 
 const numberLength = userPin.length;
 
 function PinKeyboard({ onPress }) {
     const [pin, setPin] = useState('');
+    const [load, setLoad] = useState(true);
+    const [pinIsCorrect, setPinIsCorrect] = useState(true);
+    const auth = useContext(UserContext);
 
     const handlePress = (digit) => {
         if (pin.length <= numberLength) {
@@ -35,20 +44,26 @@ function PinKeyboard({ onPress }) {
         setBox([]);
         for (let i = 0; i < numberLength; i++) {
 
-            setBox(old => [...old, <BoxNumbers number={pin.split('')[i]} />])
+            setBox(old => [...old, <BoxNumbers number={pin.split('')[i]} state={pinIsCorrect} />])
 
         }
 
     }, [pin]);
 
-    const auth = (state) => {
+    const authPin = (state) => {
+        setLoad(false);
         if (state) {
             // Użytkownik został uwierzytelniony
-            alert("OK");
+            auth.pinAuthenticate(true);
         } else {
             // Uwierzytelnienie nie powiodło się
-            alert("NIE OK");
+            auth.pinAuthenticate(false);
+            setPinIsCorrect(false);
+            setPin('');
+
         }
+
+        setLoad(true);
     }
 
     const handleAuthenticate = async () => {
@@ -59,53 +74,56 @@ function PinKeyboard({ onPress }) {
 
         const result = await LocalAuthentication.authenticateAsync(options);
         if (result.success) {
-            auth(true);
+            authPin(true);
         } else {
-            auth(false);
+            authPin(false);
         }
     };
 
-    const checkPin = (pin) => {
-        if (pin == userPin.pin) {
-            auth(true);
+    const checkPin = async (pin) => {
+        let state = await User.checkUserPin(pin);
+        console.log(state);
+        if (state) {
+            authPin(true);
         } else {
-            auth(false);
+            authPin(false);
         }
     }
 
     return (
         <View style={styles.keyboard}>
-            <View style={{ flexDirection: 'row', marginBottom: 40 }}>
-                {box}
-            </View>
+            <Loader load={load}>
+                <View style={{ flexDirection: 'row', marginBottom: 40 }}>
+                    {box}
+                </View>
 
 
-            <View style={styles.row}>
-                <PinButton digit={1} onPress={handlePress} />
-                <PinButton digit={2} onPress={handlePress} />
-                <PinButton digit={3} onPress={handlePress} />
-            </View>
-            <View style={styles.row}>
-                <PinButton digit={4} onPress={handlePress} />
-                <PinButton digit={5} onPress={handlePress} />
-                <PinButton digit={6} onPress={handlePress} />
-            </View>
-            <View style={styles.row}>
-                <PinButton digit={7} onPress={handlePress} />
-                <PinButton digit={8} onPress={handlePress} />
-                <PinButton digit={9} onPress={handlePress} />
-            </View>
-            <View style={styles.row}>
-                <TouchableOpacity style={[styles.button, { backgroundColor: "#FF4C29" }]} onPress={() => handleAuthenticate()}>
-                    <Fingerprint />
-                </TouchableOpacity>
-                <PinButton digit={0} onPress={handlePress} />
-                <TouchableOpacity style={styles.backButton} onPress={() => setPin(pin.slice(0, -1))}>
-                    <Backspace />
-                </TouchableOpacity>
-            </View>
+                <View style={styles.row}>
+                    <PinButton digit={1} onPress={handlePress} />
+                    <PinButton digit={2} onPress={handlePress} />
+                    <PinButton digit={3} onPress={handlePress} />
+                </View>
+                <View style={styles.row}>
+                    <PinButton digit={4} onPress={handlePress} />
+                    <PinButton digit={5} onPress={handlePress} />
+                    <PinButton digit={6} onPress={handlePress} />
+                </View>
+                <View style={styles.row}>
+                    <PinButton digit={7} onPress={handlePress} />
+                    <PinButton digit={8} onPress={handlePress} />
+                    <PinButton digit={9} onPress={handlePress} />
+                </View>
+                <View style={styles.row}>
+                    <TouchableOpacity style={[styles.button, { backgroundColor: "#FF4C29" }]} onPress={() => handleAuthenticate()}>
+                        <Fingerprint />
+                    </TouchableOpacity>
+                    <PinButton digit={0} onPress={handlePress} />
+                    <TouchableOpacity style={styles.backButton} onPress={() => setPin(pin.slice(0, -1))}>
+                        <Backspace />
+                    </TouchableOpacity>
+                </View>
 
-
+            </Loader>
 
         </View>
     );
@@ -119,10 +137,10 @@ const PinButton = ({ digit, onPress }) => (
     </TouchableOpacity>
 );
 
-const BoxNumbers = ({ number }) => (
+const BoxNumbers = ({ number, state }) => (
     <View style={{
         borderWidth: 2,
-        borderColor: "#082032",
+        borderColor: state ? "#082032" : "red",
         borderStyle: 'solid',
         padding: 10,
         margin: 5,

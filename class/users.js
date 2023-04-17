@@ -111,7 +111,7 @@ class User {
 
     get_pin() {
 
-        return { "pin": 1234, "length": 4 }
+        return { "length": 4, "set": true }
 
     }
 
@@ -123,6 +123,16 @@ class User {
             return { "status": true, "token": users[0].token };
         } else {
             return { "status": false, "token": "" };
+        }
+
+    }
+
+    async checkUserPin(pin) {
+
+        if (pin == "1234") {
+            return true;
+        } else {
+            return false;
         }
 
     }
