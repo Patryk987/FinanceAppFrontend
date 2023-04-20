@@ -9,6 +9,7 @@ import { ProductBarIcon, RightIcon } from './assets/icon.js';
 
 // Modules
 import { CardTitle } from './modules/card-title.js';
+import { CircleDiagram, BarDiagram } from './../../modules/digrams/index.js';
 
 
 export function Home({ navigation }) {
@@ -25,6 +26,7 @@ export function Home({ navigation }) {
                     <TouchableOpacity>
                         <CardTitle title="Twoje saldo" />
                     </TouchableOpacity>
+                    <CircleDiagram />
                 </View>
 
                 <TouchableOpacity style={scan.content} onPress={() => navigation.navigate('ScanCode')}>
@@ -49,6 +51,7 @@ export function Home({ navigation }) {
                     <TouchableOpacity>
                         <CardTitle title="Twoje wydatki" />
                     </TouchableOpacity>
+                    <BarDiagram />
                 </View>
 
                 <View style={balance.content}>
