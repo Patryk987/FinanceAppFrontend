@@ -8,9 +8,9 @@ import { main, balance, scan } from './assets/style.js';
 import { ProductBarIcon, RightIcon } from './assets/icon.js';
 
 // Modules
-import { CardTitle } from './modules/card-title.js';
+import { CardTitle } from './../../modules/card-title/index.js';
 import { CircleDiagram, BarDiagram } from './../../modules/digrams/index.js';
-
+import { ExpenseLabel } from "./../../modules/expense-label/index.js";
 
 export function Home({ navigation }) {
 
@@ -54,11 +54,44 @@ export function Home({ navigation }) {
                     <BarDiagram />
                 </View>
 
-                <View style={balance.content}>
+                <View style={[balance.content, { height: '100%' }]}>
                     <TouchableOpacity>
                         <CardTitle title="Zaplanowane wydatki" />
                     </TouchableOpacity>
+
+                    <View style={{ marginBottom: 40 }}>
+
+                        <ExpenseLabel
+                            subtitle={"Wydatki podstawowe"}
+                            title={"Wydatki"}
+                            date={"01.01.2021"}
+                            price={"+70 zł"} />
+                        <ExpenseLabel
+                            subtitle={"Wydatki podstawowe"}
+                            title={"Wydatki"}
+                            date={"01.01.2021"}
+                            price={"+70 zł"} />
+                        <ExpenseLabel
+                            subtitle={"Wydatki podstawowe"}
+                            title={"Wydatki"}
+                            date={"01.01.2021"}
+                            price={"+70 zł"} />
+                        <ExpenseLabel
+                            subtitle={"Wydatki podstawowe"}
+                            title={"Wydatki"}
+                            date={"01.01.2021"}
+                            price={"+70 zł"} />
+                        <ExpenseLabel
+                            subtitle={"Wydatki podstawowe"}
+                            title={"Wydatki"}
+                            date={"01.01.2021"}
+                            price={"+70 zł"} />
+
+                    </View>
+
                 </View>
+
+
 
             </ScrollView>
         </View>

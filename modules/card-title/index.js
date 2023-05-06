@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image } from 'react-native';
 
 // Icon 
-import { RightIcon } from './../assets/icon.js';
+import { RightIcon } from '../../screens/home/assets/icon.js';
 
 
 export function CardTitle(props) {

@@ -19,13 +19,13 @@ export const styles = StyleSheet.create({
         minHeight: 50
     },
     textBox: {
-        width: '90%'
+        width: '90%',
     },
     textIcon: {
-        width: '10%'
+        width: '10%',
     },
     text: {
         fontSize: 16,
-        color: StyleTemplate.colors.primary
+        color: StyleTemplate.colors.primary,
     }
 });
