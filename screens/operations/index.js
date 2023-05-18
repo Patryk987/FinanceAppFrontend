@@ -23,13 +23,18 @@ export function Operations({ navigation }) {
 
     const auth = useContext(UserContext);
     const operation = new Api("api/payments/All", auth.token);
+    const balance = new Api("api/payments/Balance", auth.token);
 
     // states
     const [operationList, setOperationList] = useState([]);
+    const [balanceValue, setBalanceValue] = useState([]);
 
     const getOperation = async () => {
 
         var getOperation = await operation.get();
+        var getBalance = await balance.get();
+        console.log(getBalance[0].amountPLN);
+        setBalanceValue(getBalance[0].amountPLN);
 
         setOperationList([]);
         Object.entries(getOperation).map((value, index) => {
@@ -61,7 +66,7 @@ export function Operations({ navigation }) {
                 <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginTop: 10, marginBottom: 10, height: 200 }}>
 
                     <View>
-                        <CircleDiagram />
+                        <CircleDiagram billing={balanceValue} />
                     </View>
 
                 </View>

@@ -109,7 +109,7 @@ class User {
 
     get_pin() {
 
-        return { "length": 4, "set": false }
+        return { "length": 4, "set": true }
 
     }
 

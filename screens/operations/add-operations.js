@@ -32,6 +32,7 @@ export function AddOperation({ navigation }) {
             "Name": name,
             "TypeOfPayments": typeOfPayments,
             "AmountWal": amountWal,
+            "AmountPLN": amountWal,
             "Waluta": waluta
         };
         var results = await insertOperation.post(data);
@@ -57,16 +58,17 @@ export function AddOperation({ navigation }) {
                 <CustomInput
                     label="Wartość"
                     type="input"
-                    onChangeText={(text) => setTypeOfPayments(text)}
-                    value={typeOfPayments}
+                    onChangeText={(text) => setAmountWal(text)}
+                    value={amountWal}
                     keyboardType={"number"}
                 />
 
                 <CustomInput
                     label="Grupa wydatków"
                     type="input"
-                    onChangeText={(text) => setAmountWal(text)}
-                    value={amountWal}
+
+                    onChangeText={(text) => setTypeOfPayments(text)}
+                    value={typeOfPayments}
                     keyboardType={"number"}
                 />
 

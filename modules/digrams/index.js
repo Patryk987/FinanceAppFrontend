@@ -2,18 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text } from "react-native";
 import Svg, { G, Circle } from "react-native-svg";
 
-export const CircleDiagram = () => {
+export const CircleDiagram = (props) => {
     const [circle, setCircle] = useState([]);
+    const [options, setOptions] = useState([]);
     const radius = 70;
     const circleCircumference = 2 * Math.PI * radius;
 
-    const options = [
-        { "value": 40, "color": "red", "Label": "1" },
-        { "value": 25, "color": "green", "Label": "2" },
-        { "value": 15, "color": "orange", "Label": "3" },
-        { "value": 10, "color": "brown", "Label": "4" },
-        { "value": 10, "color": "purple", "Label": "5" },
-    ]
+
+    useEffect(() => {
+        if (props.options) {
+            setOptions(props.options)
+        } else {
+            setOptions([
+                { "value": 40, "color": "red", "Label": "1" },
+                { "value": 25, "color": "green", "Label": "2" },
+                { "value": 15, "color": "orange", "Label": "3" },
+                { "value": 10, "color": "brown", "Label": "4" },
+                { "value": 10, "color": "purple", "Label": "5" },
+            ])
+        }
+    }, [props])
 
     const countCircle = () => {
 
@@ -89,7 +97,7 @@ export const CircleDiagram = () => {
                         {countCircle()}
                     </G>
                 </Svg>
-                <Text style={styles.label}>0,00 zł</Text>
+                <Text style={styles.label}>{props.billing ? props.billing : "0.00"} zł</Text>
             </View>
         </View>
     );
