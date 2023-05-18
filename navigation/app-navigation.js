@@ -13,6 +13,7 @@ import { Operations } from './../screens/operations/index.js';
 import { Stats } from './../screens/stats/index.js';
 import { Settings } from './../screens/settings/index.js';
 import { ScanCode } from './../screens/code-scan/index.js';
+import { AddOperation } from './../screens/operations/add-operations.js';
 
 const Tab = createBottomTabNavigator();
 const SettingsStack = createNativeStackNavigator();
@@ -53,6 +54,10 @@ export function AppNavigation() {
                                 name="operations"
                                 component={Operations}
                                 options={{ headerShown: false }} />
+                            <SettingsStack.Screen
+                                name="AddOperation"
+                                component={AddOperation}
+                                options={{ headerShown: true }} />
                         </SettingsStack.Navigator>
 
                     )}

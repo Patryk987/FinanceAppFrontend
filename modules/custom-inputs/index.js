@@ -18,7 +18,7 @@ export function CustomInput(props) {
     const [value, set_value] = useState(props.value ? props.value : "");
     const [error, set_error] = useState(props.error ? props.error : "");
     const [state, set_state] = useState(props.state ? props.state : "regular");
-    const [keyboard_type, set_keyboard_type] = useState(props.keyboard_type ? props.keyboard_type : "text");
+    const [keyboardType, setKeyboardType] = useState(props.keyboardType ? props.keyboardType : "text");
     const [secure_text_entry, set_secure_text_entry] = useState(props.secureTextEntry ? props.secureTextEntry : false);
     const [check, set_check] = useState(false);
     const [toggle, set_toggle] = useState(false);
@@ -77,7 +77,7 @@ export function CustomInput(props) {
                     onChangeText={(text) => onChange(text)}
                     value={value}
                     placeholderTextColor={StyleTemplate.colors.primary}
-                    keyboardType={keyboard_type}
+                    keyboardType={keyboardType}
                     secureTextEntry={secure_text_entry}
                 />
 

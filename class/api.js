@@ -26,7 +26,7 @@ class Api {
         return prepare_query;
     }
 
-    get(data) {
+    get(data = {}) {
 
         var prepare_query = this.convert_data_to_string(data);
 
@@ -37,7 +37,7 @@ class Api {
             headers: {
                 'Content-Type': 'application/json',
                 'api_key': this.api_key,
-                'user_key': this.user_key
+                'token': this.user_key
             }
         };
 
@@ -59,7 +59,7 @@ class Api {
             headers: {
                 'Content-Type': 'application/json',
                 'api_key': this.api_key,
-                'user_key': this.user_key
+                'token': this.user_key
             },
             body: JSON.stringify(data)
         };
@@ -84,7 +84,7 @@ class Api {
             headers: {
                 'Content-Type': 'application/json',
                 'api_key': this.api_key,
-                'user_key': this.user_key
+                'token': this.user_key
             },
             body: JSON.stringify(data)
         };
@@ -109,7 +109,7 @@ class Api {
             headers: {
                 'Content-Type': 'application/json',
                 'api_key': this.api_key,
-                'user_key': this.user_key
+                'token': this.user_key
             }
         };
 

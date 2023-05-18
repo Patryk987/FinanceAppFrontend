@@ -58,8 +58,6 @@ export const CircleDiagram = () => {
 
         });
 
-        console.log(data);
-
         // Wygeneruj svg
         var svg = [];
         options.forEach((element, index) => {

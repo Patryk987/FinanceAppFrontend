@@ -82,7 +82,7 @@ function PinKeyboard({ onPress }) {
 
     const checkPin = async (pin) => {
         let state = await User.checkUserPin(pin);
-        console.log(state);
+
         if (state) {
             authPin(true);
         } else {

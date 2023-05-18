@@ -11,31 +11,6 @@ import { DataBase } from './class/SQLite.js'
 
 export default function App() {
 
-  const test = async () => {
-
-    const db = new DataBase("FinanceApp9999");
-    const usersDB = "create table if not exists user (token TEXT);";
-    db.execute(usersDB);
-
-    const insert = "insert into user (token) values (?)";
-    const select = "select * from user";
-    const data = ["TOKEN"];
-
-    let z = await db.execute(insert, data);
-    let x = await db.execute(select);
-    console.log(z);
-    console.log(x.rows);
-  }
-
-
-  // return (
-  //   <>
-  //     <TouchableOpacity style={{ width: 200, height: 200, backgroundColor: 'red' }} onPress={() => test()}>
-
-  //     </TouchableOpacity>
-  //   </>
-  // );
-
   return (
     <UserContextProvider>
       <StatusBar

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image } from 'react-native';
 
 // Class
+import User from "./../../class/users.js";
 
 // Style
 
@@ -9,10 +10,17 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image } fr
 import ListElement from "../../modules/list-element/index.js";
 import Header from "../../modules/header/index.js";
 
+// Context
+import { UserContext } from "./../../context.js";
+
 export function Settings({ navigation }) {
 
+    const auth = useContext(UserContext);
+
     const logout = () => {
-        alert("OK");
+        // alert("OK");
+        User.logout();
+        auth.logout();
     }
 
     return (

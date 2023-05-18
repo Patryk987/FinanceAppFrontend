@@ -9,7 +9,7 @@ import JWT from './decodeJWT.js';
 
 class User {
     static login = false;
-    db = new DataBase("FinanceApp99");
+    db = new DataBase("FinanceApp1");
 
     construct() {
 
@@ -32,16 +32,12 @@ class User {
             "password": password
         };
 
-        console.log(data);
-
         return api.post(data).then(async response => {
 
             if (response.status == 200) {
-                var data = JWT.decode(response.TokenJWT);
-                // console.log(data);
-                await this.save(response.TokenJWT);
-                console.log(await this.get());
-                return { "status": true, "token": response.TokenJWT };
+                var data = JWT.decode(response.tokenJWT);
+                await this.save(response.tokenJWT);
+                return { "status": true, "token": response.tokenJWT };
             }
 
             return { "status": false, "token": "" };
@@ -92,7 +88,6 @@ class User {
         return await this.db.execute(select).then((response) => {
             var tab = [];
             for (var i = 0; i < response.rows.length; i++) {
-                console.log(response.rows.item(i));
                 tab.push(response.rows.item(i));
             }
 
@@ -102,8 +97,11 @@ class User {
 
     logout() {
 
-        const clearDB = "DELETE FROM user";
+        const clearDB = "DELETE FROM users";
         this.db.execute(clearDB);
+
+        const truncateDB = "TRUNCATE users";
+        this.db.execute(truncateDB);
 
         User.login = false;
 
@@ -119,6 +117,9 @@ class User {
     async user_is_login() {
 
         var users = await this.get();
+
+        console.log(users);
+
         if (users.length > 0) {
             return { "status": true, "token": users[0].token };
         } else {
