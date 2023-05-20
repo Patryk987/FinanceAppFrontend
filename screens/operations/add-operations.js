@@ -27,10 +27,26 @@ export function AddOperation({ navigation }) {
 
     const [loader, setLoader] = useState(false);
 
+    const countries = [
+        'Egypt',
+        'Canada',
+        'Australia',
+        'Ireland',
+        'Brazil',
+        'England',
+        'Dubai',
+        'France',
+        'Germany',
+        'Saudi Arabia',
+        'Argentina',
+        'India',
+    ];
+
     const send = async () => {
         var data = {
             "Name": name,
-            "TypeOfPayments": typeOfPayments,
+            "TypeOfPayments": 1,
+            // "TypeOfPayments": typeOfPayments,
             "AmountWal": amountWal,
             "AmountPLN": amountWal,
             "Waluta": waluta
@@ -39,7 +55,16 @@ export function AddOperation({ navigation }) {
 
         console.log(results);
 
+        if (results == 1) {
+            alert("Poprawnie dodano");
+        } else {
+
+            alert("Wystąpił błąd podczas dodawania operacji");
+        }
+
+
     }
+
 
     return (
         <View style={{ padding: 20 }}>
@@ -63,21 +88,22 @@ export function AddOperation({ navigation }) {
                     keyboardType={"number"}
                 />
 
-                <CustomInput
+                {/* <CustomInput
                     label="Grupa wydatków"
                     type="input"
 
                     onChangeText={(text) => setTypeOfPayments(text)}
                     value={typeOfPayments}
                     keyboardType={"number"}
-                />
+                /> */}
 
                 <CustomInput
                     label="Waluta"
-                    type="input"
+                    type="select"
                     onChangeText={(text) => setWaluta(text)}
                     value={waluta}
-                    keyboardType={"number"}
+                    keyboardType={"text"}
+                    data={["PLN", "EUR", "USD"]}
                 />
 
                 <TouchableOpacity onPress={() => send()}>

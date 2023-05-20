@@ -92,38 +92,37 @@ function PinKeyboard({ onPress }) {
 
     return (
         <View style={styles.keyboard}>
-            <Loader load={load}>
-                <View style={{ flexDirection: 'row', marginBottom: 40 }}>
-                    {box}
-                </View>
+
+            <View style={{ flexDirection: 'row', marginBottom: 40 }}>
+                {box}
+            </View>
 
 
-                <View style={styles.row}>
-                    <PinButton digit={1} onPress={handlePress} />
-                    <PinButton digit={2} onPress={handlePress} />
-                    <PinButton digit={3} onPress={handlePress} />
-                </View>
-                <View style={styles.row}>
-                    <PinButton digit={4} onPress={handlePress} />
-                    <PinButton digit={5} onPress={handlePress} />
-                    <PinButton digit={6} onPress={handlePress} />
-                </View>
-                <View style={styles.row}>
-                    <PinButton digit={7} onPress={handlePress} />
-                    <PinButton digit={8} onPress={handlePress} />
-                    <PinButton digit={9} onPress={handlePress} />
-                </View>
-                <View style={styles.row}>
-                    <TouchableOpacity style={[styles.button, { backgroundColor: "#FF4C29" }]} onPress={() => handleAuthenticate()}>
-                        <Fingerprint />
-                    </TouchableOpacity>
-                    <PinButton digit={0} onPress={handlePress} />
-                    <TouchableOpacity style={styles.backButton} onPress={() => setPin(pin.slice(0, -1))}>
-                        <Backspace />
-                    </TouchableOpacity>
-                </View>
+            <View style={styles.row}>
+                <PinButton digit={1} onPress={handlePress} />
+                <PinButton digit={2} onPress={handlePress} />
+                <PinButton digit={3} onPress={handlePress} />
+            </View>
+            <View style={styles.row}>
+                <PinButton digit={4} onPress={handlePress} />
+                <PinButton digit={5} onPress={handlePress} />
+                <PinButton digit={6} onPress={handlePress} />
+            </View>
+            <View style={styles.row}>
+                <PinButton digit={7} onPress={handlePress} />
+                <PinButton digit={8} onPress={handlePress} />
+                <PinButton digit={9} onPress={handlePress} />
+            </View>
+            <View style={styles.row}>
+                <TouchableOpacity style={[styles.button, { backgroundColor: "#FF4C29" }]} onPress={() => handleAuthenticate()}>
+                    <Fingerprint />
+                </TouchableOpacity>
+                <PinButton digit={0} onPress={handlePress} />
+                <TouchableOpacity style={styles.backButton} onPress={() => setPin(pin.slice(0, -1))}>
+                    <Backspace />
+                </TouchableOpacity>
+            </View>
 
-            </Loader>
 
         </View>
     );

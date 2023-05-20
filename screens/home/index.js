@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image } from 'react-native';
-
+// Class
+import Api from "./../..//class/api.js"
 // Style
 import { main, balance, scan } from './assets/style.js';
 
@@ -12,7 +13,29 @@ import { CardTitle } from './../../modules/card-title/index.js';
 import { CircleDiagram, BarDiagram } from './../../modules/digrams/index.js';
 import { ExpenseLabel } from "./../../modules/expense-label/index.js";
 
+// Context
+import { UserContext } from '../../context.js';
+
 export function Home({ navigation }) {
+
+    const auth = useContext(UserContext);
+    const balance = new Api("api/payments/Balance", auth.token);
+
+    // State
+    const [balanceValue, setBalanceValue] = useState(0.00);
+
+    // Function
+
+    const getBalance = async () => {
+        var balance = await balance.get();
+        console.log(balance);
+        setBalanceValue(balance[0].amountPLN);
+
+    }
+
+    useEffect(() => {
+        getBalance();
+    }, []);
 
     return (
         <View style={main.content}>
@@ -26,7 +49,7 @@ export function Home({ navigation }) {
                     <TouchableOpacity>
                         <CardTitle title="Twoje saldo" />
                     </TouchableOpacity>
-                    <CircleDiagram />
+                    <CircleDiagram billing={balanceValue} />
                 </View>
 
                 <TouchableOpacity style={scan.content} onPress={() => navigation.navigate('ScanCode')}>

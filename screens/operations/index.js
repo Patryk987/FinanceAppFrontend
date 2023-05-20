@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView, Image } fr
 // Style
 
 // Class
-import Api from "./../..//class/api.js"
+import Api from "./../../class/api.js"
 
 // Icons
 import { FiltrIcon, SortIcon } from "./assets/icons.js"
@@ -15,6 +15,7 @@ import { SmallButton, Button } from "./../../modules/buttons/index.js";
 import Header from "../../modules/header/index.js";
 import { CardTitle } from './../../modules/card-title/index.js';
 import { CircleDiagram, BarDiagram } from './../../modules/digrams/index.js';
+import Loader from './../../modules/loader/index.js';
 
 // Context
 import { UserContext } from '../../context.js';
@@ -28,9 +29,10 @@ export function Operations({ navigation }) {
     // states
     const [operationList, setOperationList] = useState([]);
     const [balanceValue, setBalanceValue] = useState([]);
+    const [load, setLoad] = useState(false);
 
     const getOperation = async () => {
-
+        setLoad(false);
         var getOperation = await operation.get();
         var getBalance = await balance.get();
         console.log(getBalance[0].amountPLN);
@@ -46,50 +48,60 @@ export function Operations({ navigation }) {
                 price={value[1].amountWal + " " + value[1].waluta} />])
         });
 
+        setLoad(true);
     }
 
     useEffect(() => {
+        console.log("############");
         getOperation();
     }, []);
 
     return (
         <View style={{
             width: '100%',
-            height: '100%',
-            justifyContent: 'center',
-            alignItems: 'center'
+            height: '100%'
         }}>
 
             <Header label="Operacje" />
-            <ScrollView style={{ width: '100%' }}>
 
-                <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginTop: 10, marginBottom: 10, height: 200 }}>
+            <Loader load={load} onRefresh={() => getOperation()}>
+                <ScrollView style={{ width: '100%' }}>
 
-                    <View>
-                        <CircleDiagram billing={balanceValue} />
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginTop: 10, marginBottom: 10, height: 200 }}>
+
+                        <View>
+                            <CircleDiagram billing={balanceValue} />
+                        </View>
+
                     </View>
 
-                </View>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginTop: 10, marginBottom: 10 }}>
+                        <Button
+                            title="Nowa operacja"
+                            icon={<Text>+</Text>}
+                            onPress={() => navigation.navigate("AddOperation")}
+                        />
+                        {/* <Button title="Nowy wydatek" icon={<Text>-</Text>} /> */}
+                    </View>
 
-                <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginTop: 10, marginBottom: 10 }}>
-                    <Button title="Nowy przychód" icon={<Text>+</Text>} onPress={() => navigation.navigate("AddOperation")} />
-                    <Button title="Nowy wydatek" icon={<Text>-</Text>} />
-                </View>
+                    <CardTitle title="Historia" />
 
-                <CardTitle title="Historia" />
-
-                {/* <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginTop: 10, marginBottom: 10 }}>
+                    {/* <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'center', marginTop: 10, marginBottom: 10 }}>
                     <SmallButton title="Filtruj" icon={<FiltrIcon />} />
                     <SmallButton title="Sortuj" icon={<SortIcon />} />
                 </View> */}
 
-                <ScrollView style={{ paddingBottom: 20 }}>
+                    <ScrollView style={{ paddingBottom: 20 }}>
 
-                    {operationList}
+
+                        {operationList}
+
+
+                    </ScrollView>
 
                 </ScrollView>
 
-            </ScrollView>
+            </Loader>
         </View>
     )
 }

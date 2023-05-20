@@ -10,6 +10,7 @@ import { ShowEye, HiddenEye } from './assets/icon.js';
 
 // Modules
 import Checkbox from './checkbox.js';
+import SelectDropdown from 'react-native-select-dropdown';
 
 export function CustomInput(props) {
 
@@ -114,6 +115,31 @@ export function CustomInput(props) {
         </>
     )
 
+    const SelectInput = (
+        <>
+            <Text style={input.label}>{label}</Text>
+            <View style={input.label_box}>
+                <SelectDropdown
+                    data={props.data}
+                    // defaultValueByIndex={1}
+                    defaultValue={props.label}
+                    onSelect={(selectedItem, index) => {
+                        console.log(selectedItem);
+                        onChange(selectedItem);
+                    }}
+                    defaultButtonText={props.label}
+                    buttonTextAfterSelection={(selectedItem, index) => {
+                        return selectedItem;
+                    }}
+                    rowTextForSelection={(item, index) => {
+                        return item;
+                    }}
+                    buttonStyle={{ width: '100%' }}
+                />
+            </View>
+        </>
+    )
+
     const loadField = () => {
         switch (type) {
             case "input":
@@ -124,6 +150,9 @@ export function CustomInput(props) {
                 break;
             case "button":
                 return Button;
+                break;
+            case "select":
+                return SelectInput;
                 break;
             default:
                 return Input;

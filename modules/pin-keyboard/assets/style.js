@@ -7,7 +7,8 @@ const screenHeight = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
     keyboard: {
-        height: '100%',
+        width: screenWidth,
+        height: screenHeight,
         alignItems: 'center',
         justifyContent: 'flex-end',
         paddingBottom: 20,
