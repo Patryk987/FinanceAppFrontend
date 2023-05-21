@@ -93,9 +93,14 @@ function PinKeyboard({ onPress }) {
     return (
         <View style={styles.keyboard}>
 
+            <View style={{ marginBottom: 30 }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Podaj twój pin</Text>
+            </View>
+
             <View style={{ flexDirection: 'row', marginBottom: 40 }}>
                 {box}
             </View>
+
 
 
             <View style={styles.row}>

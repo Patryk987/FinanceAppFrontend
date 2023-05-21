@@ -43,9 +43,25 @@ export function AddOperation({ navigation }) {
     ];
 
     const send = async () => {
+
+        var type = 1;
+
+        switch (typeOfPayments) {
+            case "Konto główne":
+                var type = 1;
+                break;
+            case "Konto oszczędnościowe":
+                var type = 2;
+                break;
+
+            default:
+                var type = 1;
+                break;
+        }
+
         var data = {
             "Name": name,
-            "TypeOfPayments": 1,
+            "TypeOfPayments": type,
             // "TypeOfPayments": typeOfPayments,
             "AmountWal": amountWal,
             "AmountPLN": amountWal,
@@ -97,6 +113,14 @@ export function AddOperation({ navigation }) {
                     keyboardType={"number"}
                 /> */}
 
+                <CustomInput
+                    label="Typ płatności"
+                    type="select"
+                    onChangeText={(text) => typeOfPayments(text)}
+                    value={waluta}
+                    keyboardType={"text"}
+                    data={["Konto główne", "Konto oszczędnościowe"]}
+                />
                 <CustomInput
                     label="Waluta"
                     type="select"

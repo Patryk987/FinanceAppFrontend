@@ -52,7 +52,6 @@ export function Operations({ navigation }) {
     }
 
     useEffect(() => {
-        console.log("############");
         getOperation();
     }, []);
 

@@ -15,6 +15,7 @@ import { ExpenseLabel } from "./../../modules/expense-label/index.js";
 
 // Context
 import { UserContext } from '../../context.js';
+import Loader from '../../modules/loader/index.js';
 
 export function Home({ navigation }) {
 
@@ -22,14 +23,13 @@ export function Home({ navigation }) {
     const balance = new Api("api/payments/Balance", auth.token);
 
     // State
-    const [balanceValue, setBalanceValue] = useState(0.00);
+    const [balanceValue, setBalanceValue] = useState(0);
 
     // Function
 
     const getBalance = async () => {
-        var balance = await balance.get();
-        console.log(balance);
-        setBalanceValue(balance[0].amountPLN);
+        var results = await balance.get();
+        setBalanceValue(results[0].amountPLN);
 
     }
 
@@ -39,7 +39,7 @@ export function Home({ navigation }) {
 
     return (
         <View style={main.content}>
-            <ScrollView>
+            <Loader load={true} onRefresh={() => getBalance()}>
 
                 <View style={main.header}>
                     <Text style={main.h1}>Witaj!</Text>
@@ -116,7 +116,7 @@ export function Home({ navigation }) {
 
 
 
-            </ScrollView>
+            </Loader>
         </View>
     )
 }
