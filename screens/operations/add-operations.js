@@ -116,8 +116,8 @@ export function AddOperation({ navigation }) {
                 <CustomInput
                     label="Typ płatności"
                     type="select"
-                    onChangeText={(text) => typeOfPayments(text)}
-                    value={waluta}
+                    onChangeText={(text) => setTypeOfPayments(text)}
+                    value={typeOfPayments}
                     keyboardType={"text"}
                     data={["Konto główne", "Konto oszczędnościowe"]}
                 />
