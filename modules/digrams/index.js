@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import Svg, { G, Circle } from "react-native-svg";
 
 export const CircleDiagram = (props) => {
@@ -103,18 +103,27 @@ export const CircleDiagram = (props) => {
     );
 };
 
-export const BarDiagram = () => {
+export const BarDiagram = (props) => {
     const [bar, setBar] = useState([]);
     const radius = 70;
     const circleCircumference = 2 * Math.PI * radius;
+    const [options, setOptions] = useState([]);
 
-    const options = [
-        { "value": 40, "color": "#082032", "label": "Rachunki" },
-        { "value": 25, "color": "#082032", "label": "Motoryzacja" },
-        { "value": 15, "color": "#082032", "label": "Rachunki" },
-        { "value": 10, "color": "#082032", "label": "Motoryzacja" },
-        { "value": 90, "color": "#082032", "label": "Rachunki" },
-    ]
+    useEffect(() => {
+        if (props.options) {
+            setOptions(props.options)
+        } else {
+            setOptions([
+                { "value": 40, "color": "#082032", "label": "Rachunki" },
+                { "value": 25, "color": "#082032", "label": "Motoryzacja" },
+                { "value": 15, "color": "#082032", "label": "Rachunki" },
+                { "value": 10, "color": "#082032", "label": "Motoryzacja" },
+                { "value": 90, "color": "#082032", "label": "Rachunki" },
+            ])
+        }
+    }, [props])
+
+
 
     const countCircle = () => {
 
@@ -129,12 +138,13 @@ export const BarDiagram = () => {
         options.forEach((element, index) => {
 
             bar.push(
-                <View style={{ alignItems: 'center' }}>
+                <View style={{ alignItems: 'center', marginRight: 10, marginLeft: 10 }}>
                     <Text style={{ fontSize: 10, fontWeight: 'bold' }}>{element.value} zł</Text>
                     <View
                         style={{
                             width: 40,
                             height: ((element.value / total) * 100) + "%",
+                            maxHeight: '80%',
                             backgroundColor: element.color,
                             borderTopRightRadius: 5,
                             borderTopLeftRadius: 5
@@ -151,17 +161,22 @@ export const BarDiagram = () => {
 
     return (
         <View style={styles.container}>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    alignItems: 'flex-end',
-                    width: '100%',
-                    height: '100%'
-                }}
-            >
-                {countCircle()}
-            </View>
+            <ScrollView horizontal={true} style={{ paddingBottom: 10 }}>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        alignItems: 'flex-end',
+                        width: '100%',
+                        height: '100%'
+                    }}
+                >
+
+
+                    {countCircle()}
+
+                </View>
+            </ScrollView>
         </View>
     );
 };

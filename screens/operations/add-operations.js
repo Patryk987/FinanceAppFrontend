@@ -114,7 +114,7 @@ export function AddOperation({ navigation }) {
                 /> */}
 
                 <CustomInput
-                    label="Typ płatności"
+                    label="Konto"
                     type="select"
                     onChangeText={(text) => setTypeOfPayments(text)}
                     value={typeOfPayments}

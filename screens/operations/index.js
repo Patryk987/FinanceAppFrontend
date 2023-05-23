@@ -44,7 +44,7 @@ export function Operations({ navigation }) {
             setOperationList(prev => [...prev, <ExpenseLabel
                 subtitle={"Wydatki podstawowe"}
                 title={value[1].name}
-                date={value[1].paymentsDate}
+                date={value[1].paymentsDate.split("T")[0]}
                 price={value[1].amountWal + " " + value[1].waluta} />])
         });
 

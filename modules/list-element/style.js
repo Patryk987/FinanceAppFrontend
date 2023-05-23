@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
         borderBottomStyle: 'solid',
         flexDirection: 'row',
         alignItems: 'center',
-        minHeight: 50
+        minHeight: 60
     },
     textBox: {
         width: '90%',

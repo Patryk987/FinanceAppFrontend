@@ -35,11 +35,11 @@ const main = StyleSheet.create({
         borderRadius: 10,
     },
     info: {
-        width: '75%',
+        width: '50%',
         color: 'white',
     },
     price: {
-        width: '25%',
+        width: '50%',
         color: 'white',
         alignItems: 'flex-end'
     },
