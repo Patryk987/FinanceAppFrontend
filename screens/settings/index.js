@@ -34,7 +34,7 @@ export function Settings({ navigation }) {
 
                 <Header label="Ustawienia" />
 
-                <ListElement label="Członkowie rodziny" onPress={() => alert("Już wkrótce!")} />
+                <ListElement label="Członkowie rodziny" onPress={() => alert("Dostępne w wersji PRO! \n Już za 19.99 miesięcznie \n Akceptujemy płatność BLIK!")} />
                 <ListElement label="Wydatki" onPress={() => navigation.navigate({ "key": "stats-fslPytFuj9rCxERsOQoiB", "name": "stats", "params": { "types": "spends" }, "path": undefined })} />
                 <ListElement label="Przychody" onPress={() => navigation.navigate({ "key": "stats-fslPytFuj9rCxERsOQoiB", "name": "stats", "params": { "types": "donations" }, "path": undefined })} />
                 <ListElement label="Oszczędności" onPress={() => navigation.navigate({ "key": "stats-fslPytFuj9rCxERsOQoiB", "name": "stats", "params": { "types": "savings" }, "path": undefined })} />
