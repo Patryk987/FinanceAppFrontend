@@ -41,7 +41,7 @@ export function Settings({ navigation }) {
                 <ListElement label="Skanuj produkt" onPress={() => navigation.navigate("ScanCode")} />
                 <ListElement label="Lista zakupów" />
                 <ListElement label="Edytuj dane" />
-                <ListElement label="Ustaw pin" />
+                <ListElement label="Ustaw pin" onPress={() => navigation.navigate("EditPin")} />
                 <ListElement label="Wyloguj" onPress={() => logout()} />
 
             </ScrollView>

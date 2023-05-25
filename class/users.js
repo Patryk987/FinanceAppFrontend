@@ -9,7 +9,8 @@ import JWT from './decodeJWT.js';
 
 class User {
     static login = false;
-    db = new DataBase("FinanceApp1");
+    static pinLength = 4;
+    db = new DataBase("asd");
 
     construct() {
 
@@ -18,7 +19,7 @@ class User {
 
     create_db() {
 
-        const usersDB = "create table if not exists users (token TEXT);";
+        const usersDB = "create table if not exists users (token TEXT, pinStatus BOOL, pin TEXT);";
         this.db.execute(usersDB);
 
     }
@@ -33,7 +34,7 @@ class User {
         };
 
         return api.post(data).then(async response => {
-
+            console.log(response);
             if (response.status == 200) {
                 var data = JWT.decode(response.tokenJWT);
                 await this.save(response.tokenJWT);
@@ -72,11 +73,11 @@ class User {
     async save(token) {
         this.create_db();
 
-        const insert = "insert into users (token) values (?)";
-        const data = [token];
+        const insert = "insert into users (token, pinStatus, pin) values (?, ?, ?)";
+        const data = [token, false, ""];
 
         let insertResults = await this.db.execute(insert, data);
-        console.log(insertResults);
+
         return { "state": true, "insertId": insertResults.insertId };
     }
 
@@ -107,18 +108,28 @@ class User {
 
     }
 
-    get_pin() {
+    async get_pin() {
 
-        return { "length": 4, "set": true }
+        var userData = await this.get();
+
+        return {
+            "length": User.pinLength, "set": userData[0].pinStatus, "pin": userData[0].pin
+        }
 
     }
 
+    async set_pin(pin) {
+
+        console.log(pin + "+");
+        const updatePin = "UPDATE users SET pinStatus = ?, pin = ?";
+        let results = await this.db.execute(updatePin, [true, pin]);
+
+        console.log(results);
+    }
 
     async user_is_login() {
 
         var users = await this.get();
-
-        console.log(users);
 
         if (users.length > 0) {
             return { "status": true, "token": users[0].token };
@@ -130,7 +141,10 @@ class User {
 
     async checkUserPin(pin) {
 
-        if (pin == "1234") {
+        var userData = await this.get();
+        var userPin = userData[0].pin;
+
+        if (pin == userPin) {
             return true;
         } else {
             return false;

@@ -14,6 +14,7 @@ import { Stats } from './../screens/stats/index.js';
 import { Settings } from './../screens/settings/index.js';
 import { ScanCode } from './../screens/code-scan/index.js';
 import { AddOperation } from './../screens/operations/add-operations.js';
+import { EditPin } from './../screens/pin/index.js';
 
 const Tab = createBottomTabNavigator();
 const SettingsStack = createNativeStackNavigator();
@@ -85,6 +86,10 @@ export function AppNavigation() {
                             <HomeStack.Screen
                                 name="settings"
                                 component={Settings}
+                                options={{ headerShown: false }} />
+                            <SettingsStack.Screen
+                                name="EditPin"
+                                component={EditPin}
                                 options={{ headerShown: false }} />
                         </SettingsStack.Navigator>
 

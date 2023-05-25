@@ -25,8 +25,10 @@ export class DataBase {
 
                 this.db.transaction(tx => {
                     tx.executeSql(query, data, (tx, results) => {
+                        console.warn(results);
                         resolve(results);
                     }, (tx, error) => {
+                        console.warn(error);
                         reject(error);
                     });
                 });

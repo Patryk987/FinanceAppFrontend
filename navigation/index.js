@@ -37,6 +37,10 @@ export function Navigation() {
         setLoad(true);
     }
 
+    const onReturnPinStatus = (status) => {
+        auth.pinAuthenticate(status);
+    }
+
     useEffect(() => {
         checkLoginUsers();
     }, []);
@@ -54,7 +58,11 @@ export function Navigation() {
 
         return (
             <View>
-                <PinKeyboard />
+                <PinKeyboard
+                    numberLength={pin.length}
+                    correctPin={pin.pin}
+                    label={"Podaj twój pin"}
+                    pinStatus={(status) => onReturnPinStatus(status)} />
             </View>
         );
 

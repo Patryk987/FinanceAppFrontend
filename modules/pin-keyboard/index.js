@@ -14,26 +14,43 @@ import { UserContext } from '../../context.js';
 
 // Class
 import User from './../../class/users.js';
-const userPin = User.get_pin();
 
 // Modules
 import Loader from './../../modules/loader/index.js';
 
+function PinKeyboard(props) {
 
-const numberLength = userPin.length;
-
-function PinKeyboard({ onPress }) {
     const [pin, setPin] = useState('');
     const [load, setLoad] = useState(true);
     const [pinIsCorrect, setPinIsCorrect] = useState(true);
+    const [pinLength, setPinLength] = useState(0);
+    const [userPin, setUserPin] = useState([1, 2, 3, 4]);
     const auth = useContext(UserContext);
 
+    // Effect
+
+    useEffect(() => {
+
+        setPinLength(props.numberLength);
+        renderBox();
+
+    }, [props.numberLength]);
+
+    useEffect(() => {
+
+        setUserPin(props.correctPin)
+        renderBox();
+
+    }, [props.correctPin]);
+
+    // Const
+
     const handlePress = (digit) => {
-        if (pin.length <= numberLength) {
+        if (pin.length <= props.numberLength) {
             let newPin = pin + digit;
             setPin(newPin);
 
-            if (pin.length + 1 == numberLength) {
+            if (pin.length + 1 == props.numberLength) {
                 checkPin(newPin);
             }
         }
@@ -41,60 +58,77 @@ function PinKeyboard({ onPress }) {
 
     const [box, setBox] = useState([]);
     useEffect(() => {
+
+        renderBox();
+
+    }, [pin]);
+
+    const renderBox = () => {
         setBox([]);
-        for (let i = 0; i < numberLength; i++) {
+        for (let i = 0; i < props.numberLength; i++) {
 
             setBox(old => [...old, <BoxNumbers number={pin.split('')[i]} state={pinIsCorrect} />])
 
         }
-
-    }, [pin]);
+    }
 
     const authPin = (state) => {
         setLoad(false);
+
         if (state) {
             // Użytkownik został uwierzytelniony
-            auth.pinAuthenticate(true);
+            if (props.pinStatus) props.pinStatus(true);
+            setPinIsCorrect(true);
         } else {
             // Uwierzytelnienie nie powiodło się
-            auth.pinAuthenticate(false);
+            if (props.pinStatus) props.pinStatus(false);
             setPinIsCorrect(false);
-            setPin('');
-
         }
+
+        setPin('');
 
         setLoad(true);
     }
 
     const handleAuthenticate = async () => {
+
         const options = {
             promptMessage: 'Proszę o uwierzytelnienie',
             fallbackLabel: 'Użyj PINu',
         };
 
         const result = await LocalAuthentication.authenticateAsync(options);
+
         if (result.success) {
             authPin(true);
         } else {
             authPin(false);
         }
+
     };
 
     const checkPin = async (pin) => {
-        let state = await User.checkUserPin(pin);
 
-        if (state) {
-            authPin(true);
-        } else {
-            authPin(false);
+        if (props.enterPin)
+            props.enterPin(pin);
+
+
+        if (props.correctPin) {
+            if (props.correctPin == pin) {
+                authPin(true);
+            } else {
+                authPin(false);
+            }
+
         }
+
     }
 
     return (
         <View style={styles.keyboard}>
 
             <View style={{ marginBottom: 30 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Podaj twój pin</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{props.label}</Text>
             </View>
 
             <View style={{ flexDirection: 'row', marginBottom: 40 }}>
