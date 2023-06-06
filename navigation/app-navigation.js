@@ -15,6 +15,10 @@ import { Settings } from './../screens/settings/index.js';
 import { ScanCode } from './../screens/code-scan/index.js';
 import { AddOperation } from './../screens/operations/add-operations.js';
 import { EditPin } from './../screens/pin/index.js';
+import { ShoppingList } from './../screens/shopping-list/index.js';
+import { AddList } from './../screens/shopping-list/add-list.js';
+import { DetailsShoppingList } from './../screens/shopping-list/shopping-list.js';
+import { AddProduct } from './../screens/shopping-list/add-product.js';
 
 const Tab = createBottomTabNavigator();
 const SettingsStack = createNativeStackNavigator();
@@ -91,6 +95,22 @@ export function AppNavigation() {
                                 name="EditPin"
                                 component={EditPin}
                                 options={{ headerShown: false }} />
+                            <SettingsStack.Screen
+                                name="ShoppingList"
+                                component={ShoppingList}
+                                options={{ headerShown: false }} />
+                            <SettingsStack.Screen
+                                name="AddList"
+                                component={AddList}
+                                options={{ headerShown: true }} />
+                            <SettingsStack.Screen
+                                name="DetailsShoppingList"
+                                component={DetailsShoppingList}
+                                options={{ headerShown: true }} />
+                            <SettingsStack.Screen
+                                name="AddProduct"
+                                component={AddProduct}
+                                options={{ headerShown: true }} />
                         </SettingsStack.Navigator>
 
                     )}

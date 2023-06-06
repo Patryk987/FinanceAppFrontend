@@ -28,7 +28,7 @@ export function Button(props) {
     }
 
     return (
-        <TouchableOpacity style={big.content} onPress={() => onPress()}>
+        <TouchableOpacity style={[big.content, props.style]} onPress={() => onPress()}>
             <View style={big.data}>
                 <View style={big.icon}>
                     {props.icon && props.icon}
