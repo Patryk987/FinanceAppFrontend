@@ -58,6 +58,12 @@ export function CustomInput(props) {
 
     }, [props.error])
 
+    useEffect(() => {
+        setKeyboardType(props.keyboardType);
+
+
+    }, [props.keyboardType])
+
     const onChange = (text) => {
 
         set_value(text);
