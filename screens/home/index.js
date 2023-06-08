@@ -49,7 +49,12 @@ export function Home({ navigation }) {
                     <TouchableOpacity>
                         <CardTitle title="Twoje saldo" />
                     </TouchableOpacity>
-                    <CircleDiagram billing={balanceValue} />
+                    <CircleDiagram billing={balanceValue}
+                        options={[
+                            { "value": 40, "color": "#FF4C29", "label": "Wydatki" },
+                            { "value": 25, "color": "#082032", "label": "Przychody" },
+                        ]}
+                    />
                 </View>
 
                 <TouchableOpacity style={scan.content} onPress={() => navigation.navigate('ScanCode')}>
@@ -74,7 +79,21 @@ export function Home({ navigation }) {
                     <TouchableOpacity>
                         <CardTitle title="Twoje wydatki" />
                     </TouchableOpacity>
-                    <BarDiagram />
+                    <View style={{ height: 200 }}>
+
+                        <BarDiagram options={[
+                            { "value": 40, "color": "#082032", "label": "Żywność" },
+                            { "value": 25, "color": "#082032", "label": "Rachunki" },
+                            { "value": 15, "color": "#082032", "label": "Transport" },
+                            { "value": 10, "color": "#082032", "label": "Zakupy" },
+                            { "value": 90, "color": "#082032", "label": "Zdrowie i uroda" },
+                            { "value": 40, "color": "#082032", "label": "Rozrywka" },
+                            { "value": 25, "color": "#082032", "label": "Edukacja" },
+                            { "value": 15, "color": "#082032", "label": "Opieka nad domem" },
+                            { "value": 10, "color": "#082032", "label": "Dzieci" },
+                            { "value": 90, "color": "#082032", "label": "Inwestycje" },
+                        ]} />
+                    </View>
                 </View>
 
                 <View style={[balance.content, { height: '100%' }]}>

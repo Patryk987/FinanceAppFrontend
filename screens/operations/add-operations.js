@@ -24,23 +24,10 @@ export function AddOperation({ navigation }) {
     const [typeOfPayments, setTypeOfPayments] = useState("");
     const [amountWal, setAmountWal] = useState("");
     const [waluta, setWaluta] = useState("");
+    const [group, setGroup] = useState("");
 
     const [loader, setLoader] = useState(false);
 
-    const countries = [
-        'Egypt',
-        'Canada',
-        'Australia',
-        'Ireland',
-        'Brazil',
-        'England',
-        'Dubai',
-        'France',
-        'Germany',
-        'Saudi Arabia',
-        'Argentina',
-        'India',
-    ];
 
     const send = async () => {
 
@@ -62,7 +49,7 @@ export function AddOperation({ navigation }) {
         var data = {
             "Name": name,
             "TypeOfPayments": type,
-            // "TypeOfPayments": typeOfPayments,
+            "Groups": group,
             "AmountWal": amountWal,
             "AmountPLN": amountWal,
             "Waluta": waluta
@@ -128,6 +115,14 @@ export function AddOperation({ navigation }) {
                     value={waluta}
                     keyboardType={"text"}
                     data={["PLN", "EUR", "USD"]}
+                />
+                <CustomInput
+                    label="Grupa transakcji"
+                    type="select"
+                    onChangeText={(text) => setGroup(text)}
+                    value={group}
+                    keyboardType={"text"}
+                    data={["Żywność", "Rachunki", "Transport", "Zakupy", "Zdrowie i uroda", "Rozrywka", "Edukacja", "Opieka nad domem", "Dzieci", "Inwestycje"]}
                 />
 
                 <TouchableOpacity onPress={() => send()}>

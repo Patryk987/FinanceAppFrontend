@@ -86,7 +86,7 @@ export function Stats({ route, navigation }) {
         Object.entries(getOperation).map((value, index) => {
 
             setOperationList(prev => [...prev, <ExpenseLabel
-                subtitle={"Wydatki podstawowe"}
+                subtitle={value[1].groups ? value[1].groups : "Wydatki podstawowe"}
                 title={value[1].name}
                 date={value[1].paymentsDate.split("T")[0]}
                 price={value[1].amountWal + " " + value[1].waluta} />])
@@ -108,7 +108,7 @@ export function Stats({ route, navigation }) {
             if (value[1].amountWal < 0) {
 
                 setOperationList(prev => [...prev, <ExpenseLabel
-                    subtitle={"Wydatki podstawowe"}
+                    subtitle={value[1].groups ? value[1].groups : "Wydatki podstawowe"}
                     title={value[1].name}
                     date={value[1].paymentsDate.split("T")[0]}
                     price={value[1].amountWal + " " + value[1].waluta} />])
