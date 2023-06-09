@@ -12,7 +12,6 @@ export const main = StyleSheet.create({
     content: {
         height: '100%',
         width: '100%',
-        backgroundColor: StyleTemplate.colors.background,
         marginTop: STATUSBAR_HEIGHT,
     },
     header: {

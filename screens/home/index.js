@@ -21,9 +21,19 @@ export function Home({ navigation }) {
 
     const auth = useContext(UserContext);
     const balance = new Api("api/payments/Balance", auth.token);
+    const cyclicalExpensesApi = new Api("api/cyclicalExpenses/get", auth.token);
 
     // State
     const [balanceValue, setBalanceValue] = useState(0);
+    const [cyclicalExpenses, setCyclicalExpenses] = useState(0);
+
+    // Effect
+
+    useEffect(() => {
+        getBalance();
+        getCyclicalExpenses();
+    }, []);
+
 
     // Function
 
@@ -33,13 +43,19 @@ export function Home({ navigation }) {
 
     }
 
-    useEffect(() => {
+    const getCyclicalExpenses = async () => {
+        var results = await cyclicalExpensesApi.get();
+        setCyclicalExpenses(results);
+    }
+
+    const refresh = () => {
         getBalance();
-    }, []);
+        getCyclicalExpenses();
+    }
 
     return (
         <View style={main.content}>
-            <Loader load={true} onRefresh={() => getBalance()}>
+            <Loader load={true} onRefresh={() => refresh()}>
 
                 <View style={main.header}>
                     <Text style={main.h1}>Witaj!</Text>
@@ -75,7 +91,7 @@ export function Home({ navigation }) {
 
                 </TouchableOpacity>
 
-                <View style={balance.content}>
+                {/* <View style={balance.content}>
                     <TouchableOpacity>
                         <CardTitle title="Twoje wydatki" />
                     </TouchableOpacity>
@@ -94,7 +110,7 @@ export function Home({ navigation }) {
                             { "value": 90, "color": "#082032", "label": "Inwestycje" },
                         ]} />
                     </View>
-                </View>
+                </View> */}
 
                 <View style={[balance.content, { height: '100%' }]}>
                     <TouchableOpacity>
@@ -103,31 +119,12 @@ export function Home({ navigation }) {
 
                     <View style={{ marginBottom: 40 }}>
 
-                        <ExpenseLabel
-                            subtitle={"Wydatki podstawowe"}
-                            title={"Wydatki"}
-                            date={"01.01.2021"}
-                            price={"+70 zł"} />
-                        <ExpenseLabel
-                            subtitle={"Wydatki podstawowe"}
-                            title={"Wydatki"}
-                            date={"01.01.2021"}
-                            price={"+70 zł"} />
-                        <ExpenseLabel
-                            subtitle={"Wydatki podstawowe"}
-                            title={"Wydatki"}
-                            date={"01.01.2021"}
-                            price={"+70 zł"} />
-                        <ExpenseLabel
-                            subtitle={"Wydatki podstawowe"}
-                            title={"Wydatki"}
-                            date={"01.01.2021"}
-                            price={"+70 zł"} />
-                        <ExpenseLabel
-                            subtitle={"Wydatki podstawowe"}
-                            title={"Wydatki"}
-                            date={"01.01.2021"}
-                            price={"+70 zł"} />
+                        {cyclicalExpenses ? cyclicalExpenses.map((r) => <ExpenseLabel
+                            subtitle={r.Groups ? r.Groups : "Wydatki podstawowe"}
+                            title={r.Name}
+                            date={r.StartData.split("T")[0]}
+                            price={r.Amount + " " + r.Currency} />) : <></>
+                        }
 
                     </View>
 

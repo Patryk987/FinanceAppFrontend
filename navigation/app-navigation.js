@@ -14,6 +14,7 @@ import { Stats } from './../screens/stats/index.js';
 import { Settings } from './../screens/settings/index.js';
 import { ScanCode } from './../screens/code-scan/index.js';
 import { AddOperation } from './../screens/operations/add-operations.js';
+import { AddCyclicalOperation } from './../screens/operations/add-cyclical-operations.js';
 import { EditPin } from './../screens/pin/index.js';
 import { ShoppingList } from './../screens/shopping-list/index.js';
 import { AddList } from './../screens/shopping-list/add-list.js';
@@ -21,7 +22,6 @@ import { DetailsShoppingList } from './../screens/shopping-list/shopping-list.js
 import { AddProduct } from './../screens/shopping-list/add-product.js';
 
 const Tab = createBottomTabNavigator();
-const SettingsStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -36,16 +36,16 @@ export function AppNavigation() {
                     options={TabItemOption("Home", "home")}>
                     {() => (
 
-                        <SettingsStack.Navigator>
+                        <Stack.Navigator>
                             <HomeStack.Screen
                                 name="Home"
                                 component={Home}
                                 options={{ headerShown: false }} />
-                            <SettingsStack.Screen
+                            <Stack.Screen
                                 name="ScanCode"
                                 component={ScanCode}
                                 options={{ headerShown: true }} />
-                        </SettingsStack.Navigator>
+                        </Stack.Navigator>
 
                     )}
                 </Tab.Screen>
@@ -54,16 +54,20 @@ export function AppNavigation() {
                     options={TabItemOption("Operacje", "money")}>
                     {() => (
 
-                        <SettingsStack.Navigator>
+                        <Stack.Navigator>
                             <HomeStack.Screen
                                 name="operations"
                                 component={Operations}
                                 options={{ headerShown: false }} />
-                            <SettingsStack.Screen
+                            <Stack.Screen
                                 name="AddOperation"
                                 component={AddOperation}
                                 options={{ headerShown: true }} />
-                        </SettingsStack.Navigator>
+                            <Stack.Screen
+                                name="AddCyclicalOperation"
+                                component={AddCyclicalOperation}
+                                options={{ headerShown: true }} />
+                        </Stack.Navigator>
 
                     )}
                 </Tab.Screen>
@@ -72,12 +76,12 @@ export function AppNavigation() {
                     options={TabItemOption("Statystyki", "stats")}>
                     {() => (
 
-                        <SettingsStack.Navigator>
+                        <Stack.Navigator>
                             <HomeStack.Screen
                                 name="stats"
                                 component={Stats}
                                 options={{ headerShown: false }} />
-                        </SettingsStack.Navigator>
+                        </Stack.Navigator>
 
                     )}
                 </Tab.Screen>
@@ -86,32 +90,32 @@ export function AppNavigation() {
                     options={TabItemOption("Ustawienia", "setting")}>
                     {() => (
 
-                        <SettingsStack.Navigator>
+                        <Stack.Navigator>
                             <HomeStack.Screen
                                 name="settings"
                                 component={Settings}
                                 options={{ headerShown: false }} />
-                            <SettingsStack.Screen
+                            <Stack.Screen
                                 name="EditPin"
                                 component={EditPin}
                                 options={{ headerShown: false }} />
-                            <SettingsStack.Screen
+                            <Stack.Screen
                                 name="ShoppingList"
                                 component={ShoppingList}
                                 options={{ headerShown: false }} />
-                            <SettingsStack.Screen
+                            <Stack.Screen
                                 name="AddList"
                                 component={AddList}
                                 options={{ headerShown: true }} />
-                            <SettingsStack.Screen
+                            <Stack.Screen
                                 name="DetailsShoppingList"
                                 component={DetailsShoppingList}
                                 options={{ headerShown: true }} />
-                            <SettingsStack.Screen
+                            <Stack.Screen
                                 name="AddProduct"
                                 component={AddProduct}
                                 options={{ headerShown: true }} />
-                        </SettingsStack.Navigator>
+                        </Stack.Navigator>
 
                     )}
                 </Tab.Screen>
