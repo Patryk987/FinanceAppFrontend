@@ -40,7 +40,7 @@ export function Settings({ navigation }) {
                 <ListElement label="Oszczędności" onPress={() => navigation.navigate({ "key": "stats-fslPytFuj9rCxERsOQoiB", "name": "stats", "params": { "types": "savings" }, "path": undefined })} />
                 <ListElement label="Skanuj produkt" onPress={() => navigation.navigate("ScanCode")} />
                 <ListElement label="Lista zakupów" onPress={() => navigation.navigate("ShoppingList")} />
-                <ListElement label="Edytuj dane" />
+                {/* <ListElement label="Edytuj dane" /> */}
                 <ListElement label="Ustaw pin" onPress={() => navigation.navigate("EditPin")} />
                 <ListElement label="Wyloguj" onPress={() => logout()} />
 

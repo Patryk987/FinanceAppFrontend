@@ -21,10 +21,12 @@ export function Home({ navigation }) {
 
     const auth = useContext(UserContext);
     const balance = new Api("api/payments/Balance", auth.token);
+    const savingsBalance = new Api("api/payments/SavingsBalance", auth.token);
     const cyclicalExpensesApi = new Api("api/cyclicalExpenses/get", auth.token);
 
     // State
     const [balanceValue, setBalanceValue] = useState(0);
+    const [savingsBalanceValue, setSavingsBalanceValue] = useState(0);
     const [cyclicalExpenses, setCyclicalExpenses] = useState(0);
 
     // Effect
@@ -38,8 +40,12 @@ export function Home({ navigation }) {
     // Function
 
     const getBalance = async () => {
-        var results = await balance.get();
-        setBalanceValue(results[0].amountPLN);
+        var resultsBalance = await balance.get();
+        setBalanceValue(resultsBalance[0].amountPLN);
+
+        var resultsSavingBalance = await savingsBalance.get();
+        setSavingsBalanceValue(resultsSavingBalance[0].amountPLN);
+
 
     }
 
@@ -67,8 +73,8 @@ export function Home({ navigation }) {
                     </TouchableOpacity>
                     <CircleDiagram billing={balanceValue}
                         options={[
-                            { "value": 40, "color": "#FF4C29", "label": "Wydatki" },
-                            { "value": 25, "color": "#082032", "label": "Przychody" },
+                            { "value": balanceValue, "color": "#FF4C29", "label": "Konto główne" },
+                            { "value": savingsBalanceValue, "color": "#082032", "label": "Konto oszczędnościowe" },
                         ]}
                     />
                 </View>

@@ -79,10 +79,11 @@ export function Stats({ route, navigation }) {
         setType("Wszystkie");
         var getOperation = await operation.get();
         var getBalance = await balance.get();
-        console.log(getBalance[0].amountPLN);
+
         setBalanceValue(getBalance[0].amountPLN);
         getDiagram(getOperation);
         setOperationList([]);
+
         Object.entries(getOperation).map((value, index) => {
 
             setOperationList(prev => [...prev, <ExpenseLabel
