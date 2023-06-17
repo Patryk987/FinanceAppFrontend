@@ -23,16 +23,20 @@ export function Login({ navigation }) {
     const [password, setPassword] = useState("");
 
     const [loader, setLoader] = useState(false);
+    const [errors, setErrors] = useState(false);
 
     const send = async () => {
 
         setLoader(true);
 
         var loginResult = await User.login(email, password, endpointUser);
-
-        if (loginResult.status) {
+        if (loginResult && loginResult.status) {
             auth.authenticate(loginResult.token);
+        } else {
+            setErrors("Błędne dane logowania");
+            console.log(loginResult);
         }
+
 
         setLoader(false);
 
@@ -50,6 +54,8 @@ export function Login({ navigation }) {
             </View>
 
             <ScrollView style={content.content}>
+
+                {errors && <Text style={{ paddingTop: 10, color: "red" }}>{errors}</Text>}
 
                 <CustomInput
                     label="Twój email"

@@ -35,7 +35,7 @@ class User {
 
         return api.post(data).then(async response => {
             console.log(response);
-            if (response.status == 200) {
+            if (response && response.status == 200) {
                 var data = JWT.decode(response.tokenJWT);
                 await this.save(response.tokenJWT);
                 return { "status": true, "token": response.tokenJWT };
@@ -60,7 +60,7 @@ class User {
 
         return await api.post(data).then(response => {
             console.log(response);
-            if (response.status == 200) {
+            if (response && response.status == 200) {
                 return { "status": true, "errors": {} };
             } else {
                 return { "status": false, "errors": response.errors };

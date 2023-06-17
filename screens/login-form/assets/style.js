@@ -29,7 +29,6 @@ export const header = StyleSheet.create({
 
 export const content = StyleSheet.create({
     content: {
-        height: 'auto',
         width: '100%',
     },
 });

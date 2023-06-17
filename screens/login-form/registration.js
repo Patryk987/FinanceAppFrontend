@@ -26,6 +26,7 @@ export function Registration({ navigation }) {
     const [surname, setSurname] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
+    const [errors, setErrors] = useState({});
 
     const registration = async () => {
 
@@ -37,6 +38,7 @@ export function Registration({ navigation }) {
             setIsPopupVisible(true);
         } else {
             console.log(registrationResult.errors);
+            setErrors(registrationResult.errors);
         }
 
         setLoader(false);
@@ -59,6 +61,10 @@ export function Registration({ navigation }) {
                     </Text>
 
                 </View>
+
+                {errors["Login"] && <Text style={{ paddingTop: 10, color: "red" }}>{errors["Login"]}</Text>}
+                {errors["Password"] && <Text style={{ paddingTop: 10, color: "red" }}>{errors["Password"]}</Text>}
+                {errors["ConfirmPassword"] && <Text style={{ paddingTop: 10, color: "red" }}>{errors["ConfirmPassword"]}</Text>}
 
                 <CustomInput
                     label={'Twój email'}
@@ -104,7 +110,7 @@ export function Registration({ navigation }) {
 
                 </TouchableOpacity>
 
-
+                <View style={{ height: 50 }}></View>
             </ScrollView>
 
             <Popup
