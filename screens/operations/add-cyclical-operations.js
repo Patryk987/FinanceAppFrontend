@@ -11,7 +11,7 @@ import { main, header, content, footer } from './assets/style.js';
 // Modules
 import { CustomInput } from '../../modules/custom-inputs/index.js'
 import Header from "../../modules/header/index.js";
-
+import { Popup } from '../../modules/popup/index.js'
 // Context
 import { UserContext } from '../../context.js';
 
@@ -25,38 +25,14 @@ export function AddCyclicalOperation({ navigation }) {
     const [amountWal, setAmountWal] = useState("");
     const [waluta, setWaluta] = useState("");
     const [group, setGroup] = useState("");
-
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [loader, setLoader] = useState(false);
-
+    const [isPopupVisibleError, setIsPopupVisibleError] = useState(false);
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
     const send = async () => {
-
-        var type = 1;
-
-        switch (typeOfPayments) {
-            case "Konto główne":
-                var type = 1;
-                break;
-            case "Konto oszczędnościowe":
-                var type = 2;
-                break;
-
-            default:
-                var type = 1;
-                break;
-        }
-
-        // var data = {
-        //     "Name": name,
-        //     "TypeOfPayments": type,
-        //     "Groups": group,
-        //     "AmountWal": amountWal,
-        //     "AmountPLN": amountWal,
-        //     "Waluta": waluta
-        // };
 
         var data = {
             "Name": name,
@@ -71,16 +47,15 @@ export function AddCyclicalOperation({ navigation }) {
         console.log(results);
 
         if (results.status) {
-            alert("Poprawnie dodano");
+            setIsPopupVisible(true);
         } else {
-
-            alert("Wystąpił błąd podczas dodawania operacji");
+            setIsPopupVisibleError(true);
         }
 
 
     }
 
-
+    const closePopup = () => setIsPopupVisible(false); const closePopupError = () => setIsPopupVisibleError(false);
     return (
         <View style={{ padding: 20 }}>
 
@@ -130,6 +105,21 @@ export function AddCyclicalOperation({ navigation }) {
                 </TouchableOpacity>
 
             </ScrollView >
+            <Popup
+                title="Nowa operacja"
+                message="Poprawnie dodano"
+                buttonText="Ok"
+                visible={isPopupVisible}
+                onClose={closePopup}
+            />
+
+            <Popup
+                title="Nowa operacja"
+                message="Wystąpił błąd podczas dodawania operacji"
+                buttonText="Spróbuj ponownie"
+                visible={isPopupVisibleError}
+                onClose={closePopupError}
+            />
 
         </View >
     )

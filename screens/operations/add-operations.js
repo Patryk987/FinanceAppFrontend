@@ -11,6 +11,8 @@ import { main, header, content, footer } from './assets/style.js';
 // Modules
 import { CustomInput } from '../../modules/custom-inputs/index.js'
 import Header from "../../modules/header/index.js";
+import { Popup } from '../../modules/popup/index.js'
+
 
 // Context
 import { UserContext } from '../../context.js';
@@ -27,6 +29,9 @@ export function AddOperation({ navigation }) {
     const [group, setGroup] = useState("");
 
     const [loader, setLoader] = useState(false);
+
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isPopupVisibleError, setIsPopupVisibleError] = useState(false);
 
 
     const send = async () => {
@@ -59,14 +64,17 @@ export function AddOperation({ navigation }) {
         console.log(results);
 
         if (results == 1) {
-            alert("Poprawnie dodano");
-        } else {
+            setIsPopupVisible(true);
 
-            alert("Wystąpił błąd podczas dodawania operacji");
+        } else {
+            setIsPopupVisibleError(true);
         }
 
 
     }
+
+    const closePopup = () => setIsPopupVisible(false);
+    const closePopupError = () => setIsPopupVisibleError(false);
 
 
     return (
@@ -135,6 +143,22 @@ export function AddOperation({ navigation }) {
                 </TouchableOpacity>
 
             </ScrollView>
+
+            <Popup
+                title="Nowa operacja"
+                message="Poprawnie dodano"
+                buttonText="Ok"
+                visible={isPopupVisible}
+                onClose={closePopup}
+            />
+
+            <Popup
+                title="Nowa operacja"
+                message="Wystąpił błąd podczas dodawania operacji"
+                buttonText="Spróbuj ponownie"
+                visible={isPopupVisibleError}
+                onClose={closePopupError}
+            />
 
         </View >
     )
